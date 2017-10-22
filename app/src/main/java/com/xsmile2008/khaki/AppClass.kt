@@ -8,7 +8,13 @@ import com.xsmile2008.khaki.dagger.DaggerAppComponent
 /**
  * Created by vladstarikov on 10/21/17.
  */
-class AppClass() : Application() {
+class AppClass : Application() {
 
-    val component: AppComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+    init {
+        component = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+    }
+
+    companion object {
+        lateinit var component: AppComponent
+    }
 }
