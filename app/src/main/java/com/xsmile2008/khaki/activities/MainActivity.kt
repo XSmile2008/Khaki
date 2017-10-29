@@ -13,7 +13,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var app: Application
+    lateinit var router: Router
 
     val navigator: Navigator = MainNavigator(supportFragmentManager, R.id.container)
 

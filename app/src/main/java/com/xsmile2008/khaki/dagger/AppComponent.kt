@@ -4,16 +4,18 @@ import com.xsmile2008.khaki.activities.HumanDetailsActivity
 import com.xsmile2008.khaki.activities.MainActivity
 import com.xsmile2008.khaki.fragments.HumansFragment
 import dagger.Component
+import javax.inject.Singleton
 
 /**
  * Created by vladstarikov on 10/21/17.
  */
 
+@Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
 
     //Activities
-    fun inject(mainActivity: MainActivity)
+    fun inject(activity: MainActivity)
     fun inject(activity: HumanDetailsActivity)
 
     //Fragments

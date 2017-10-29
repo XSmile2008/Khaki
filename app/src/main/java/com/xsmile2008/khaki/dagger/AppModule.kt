@@ -20,7 +20,9 @@ class AppModule(private val app: Application) {
 
     @Provides
     @Singleton
-    fun provideApplication(): Application = app
+    fun provideApplication(): Application {
+        return app
+    }
 
     @Provides
     @Singleton
