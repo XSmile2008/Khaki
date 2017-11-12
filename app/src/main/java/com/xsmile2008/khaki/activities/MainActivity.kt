@@ -1,12 +1,13 @@
 package com.xsmile2008.khaki.activities
 
-import android.app.Application
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.xsmile2008.khaki.AppClass
 import com.xsmile2008.khaki.R
+import com.xsmile2008.khaki.enums.Screen
 import com.xsmile2008.khaki.navigators.MainNavigator
 import ru.terrakok.cicerone.Navigator
+import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -15,11 +16,26 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var router: Router
 
-    val navigator: Navigator = MainNavigator(supportFragmentManager, R.id.container)
+    @Inject
+    lateinit var navigationHolder: NavigatorHolder
+
+    private val navigator: Navigator = MainNavigator(this, supportFragmentManager, R.id.container)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         AppClass.component.inject(this)
+        setContentView(R.layout.activity_main)
+
+        router.navigateTo(Screen.HUMANS.name)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigationHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        navigationHolder.removeNavigator()
+        super.onPause()
     }
 }

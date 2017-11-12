@@ -20,9 +20,7 @@ class AppModule(private val app: Application) {
 
     @Provides
     @Singleton
-    fun provideApplication(): Application {
-        return app
-    }
+    fun provideApplication(): Application = app
 
     @Provides
     @Singleton
@@ -30,7 +28,7 @@ class AppModule(private val app: Application) {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(): AppDatabase = Room.databaseBuilder(app, AppDatabase::class.java, "app_database").allowMainThreadQueries().build()
+    fun provideAppDatabase(): AppDatabase = Room.databaseBuilder(app, AppDatabase::class.java, "app_database").fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton

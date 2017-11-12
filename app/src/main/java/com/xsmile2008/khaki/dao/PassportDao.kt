@@ -15,7 +15,7 @@ interface PassportDao {
     fun getAll(): List<Passport>
 
     @Query("SELECT * FROM passports WHERE number = :number")
-    fun findByNumber(number: String): Passport
+    fun findByNumber(number: String): Passport?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(passport: Passport)
@@ -28,4 +28,7 @@ interface PassportDao {
 
     @Delete
     fun delete(passport: Passport)
+
+    @Query("DELETE FROM passports")
+    fun deleteAll(): Int
 }

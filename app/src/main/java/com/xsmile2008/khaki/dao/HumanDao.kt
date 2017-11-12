@@ -1,5 +1,6 @@
 package com.xsmile2008.khaki.dao
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import com.xsmile2008.khaki.entities.Human
@@ -12,10 +13,13 @@ import com.xsmile2008.khaki.entities.Human
 interface HumanDao {
 
     @Query("SELECT * FROM humans")
-    fun getAll(): List<Human>
+    fun getAll(): LiveData<List<Human>>
+
+//    @Query("SELECT * FROM humans")
+//    fun getAll(): List<Human>
 
     @Query("SELECT * FROM humans WHERE id = :id")
-    fun findById(id: Long): Human
+    fun findById(id: Long): Human?
 
     @Insert(onConflict = REPLACE)
     fun insert(human: Human)
@@ -28,4 +32,7 @@ interface HumanDao {
 
     @Delete
     fun delete(human: Human)
+
+    @Query("DELETE FROM humans")
+    fun deleteAll(): Int
 }

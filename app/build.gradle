@@ -26,9 +26,15 @@ android {
     }
 }
 
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
 ext {
     supportLibraryVersion = '26.1.0'
-    archVersion = '1.0.0-rc1'
+    archVersion = '1.0.0'
     daggerVersion = '2.12'
 }
 
@@ -40,6 +46,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19.3'
 
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:support-v4:$supportLibraryVersion"
@@ -49,6 +56,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     compile "android.arch.persistence.room:runtime:$archVersion"
+    kapt "android.arch.persistence.room:compiler:$archVersion"
     compile "android.arch.lifecycle:extensions:$archVersion"
 
     compile "com.google.dagger:dagger:$daggerVersion"
