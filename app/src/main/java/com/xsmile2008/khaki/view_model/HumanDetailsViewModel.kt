@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel
 import com.xsmile2008.khaki.AppClass
 import com.xsmile2008.khaki.db.AppDatabase
 import com.xsmile2008.khaki.entities.Human
+import com.xsmile2008.khaki.entities.MilitaryCard
 import com.xsmile2008.khaki.entities.Passport
 import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
@@ -20,6 +21,7 @@ class HumanDetailsViewModel : ViewModel() {
 
     private val human = MutableLiveData<Human>()
     private val passport = MutableLiveData<Passport>()
+    private val militaryCard = MutableLiveData<MilitaryCard>()
 
     init {
         AppClass.component.inject(this)
@@ -28,6 +30,8 @@ class HumanDetailsViewModel : ViewModel() {
     fun getHuman(): LiveData<Human> = human
 
     fun getPassport(): LiveData<Passport> = passport
+
+    fun getMilitaryCard(): LiveData<MilitaryCard> = militaryCard
 
     fun fetchHuman(humanId: Long) {
         async {
@@ -39,6 +43,17 @@ class HumanDetailsViewModel : ViewModel() {
         async {
             try {
                 passport.postValue(db.passportDao().findByHumanId(humanId))
+            } catch (e:Exception) {
+                e.printStackTrace()
+            }
+
+        }
+    }
+
+    fun fetchMilitaryCard(humanId: Long) {
+        async {
+            try {
+                militaryCard.postValue(db.militaryCardDao().findByHumanId(humanId))
             } catch (e:Exception) {
                 e.printStackTrace()
             }

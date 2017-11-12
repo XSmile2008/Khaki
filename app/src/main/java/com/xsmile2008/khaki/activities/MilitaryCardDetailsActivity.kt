@@ -23,6 +23,10 @@ import javax.inject.Inject
  */
 class MilitaryCardDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
+    companion object {
+        val REQUEST_CODE = 118
+    }
+
     @Inject
     lateinit var db: AppDatabase
 
@@ -60,7 +64,7 @@ class MilitaryCardDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetLi
             if (f_military_card_number.text.isEmpty()
                     || f_authority.text.isEmpty()
                     || (militaryCard == null && date == null)) {
-                Toast.makeText(this@MilitaryCardDetailsActivity, "Not all fields filled!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Not all fields filled!", Toast.LENGTH_SHORT).show()
             } else {
                 async {
                     try {

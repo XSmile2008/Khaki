@@ -23,6 +23,10 @@ import javax.inject.Inject
  */
 class PassportDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
+    companion object {
+        val REQUEST_CODE = 117
+    }
+
     @Inject
     lateinit var db: AppDatabase
 
@@ -60,7 +64,7 @@ class PassportDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             if (f_passport_number.text.isEmpty()
                     || f_authority.text.isEmpty()
                     || (passport == null && date == null)) {
-                Toast.makeText(this@PassportDetailsActivity, "Not all fields filled!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Not all fields filled!", Toast.LENGTH_SHORT).show()
             } else {
                 async {
                     try {

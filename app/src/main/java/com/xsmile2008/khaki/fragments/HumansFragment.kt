@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.*
 import com.xsmile2008.khaki.AppClass
 import com.xsmile2008.khaki.R
 import com.xsmile2008.khaki.activities.HumanDetailsActivity
@@ -20,6 +20,7 @@ import com.xsmile2008.khaki.interfaces.OnItemPositionRemoved
 import com.xsmile2008.khaki.interfaces.OnItemPositionSelected
 import com.xsmile2008.khaki.view_model.HumansViewModel
 import kotlinx.android.synthetic.main.fragment_humans.*
+import kotlinx.coroutines.experimental.async
 
 /**
  * Created by vladstarikov on 10/21/17.
@@ -44,6 +45,7 @@ class HumansFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppClass.component.inject(this)
+        setHasOptionsMenu(true)
         viewModel = ViewModelProviders.of(this).get(HumansViewModel::class.java)
     }
 
@@ -60,6 +62,34 @@ class HumansFragment : Fragment() {
                 DividerItemDecoration.VERTICAL).apply { setDrawable(context.getDrawable(R.drawable.divider_empty_8dp)) }
         )
 
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.END, ItemTouchHelper.START) {
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                viewHolder?.let {
+                    async {
+                        viewModel.db.humanDao().delete(adapter.getItems()[it.adapterPosition])
+                    }
+                }
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(list)
+
         viewModel.getHumans().observe(this, Observer<List<Human>>(adapter::setItems))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_create, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item!!.itemId) {
+        R.id.action_create -> {
+            startActivity(Intent(context, HumanDetailsActivity::class.java))
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }

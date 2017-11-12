@@ -3,6 +3,7 @@
 
     <string name="action_select">Select</string>
     <string name="action_create">Create</string>
+    <string name="action_edit">Edit</string>
     <string name="action_save">Save</string>
 
     <string name="empty">Empty</string>
@@ -19,4 +20,7 @@
     <string name="line_title_birthday">Birthday:</string>
     <string name="line_title_gender">Gender:</string>
     <string name="line_title_date_of_creation">Date of creation:</string>
+    <string name="recruits">Recruits</string>
+    <string name="line_title_military_card">Military Card:</string>
+    <string name="military_card_number">Military Card Number</string>
 </resources>

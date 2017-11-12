@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 import java.util.*
 
 /**
@@ -26,4 +27,4 @@ class MilitaryCard(
         @ColumnInfo(name = "human_id") var humanId: Long,
         @ColumnInfo(name = "authority") var authority: String,
         @ColumnInfo(name = "creation_date") var creationDate: Date
-)
+) : Serializable

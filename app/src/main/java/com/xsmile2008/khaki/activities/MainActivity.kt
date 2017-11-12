@@ -2,6 +2,7 @@ package com.xsmile2008.khaki.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.xsmile2008.khaki.AppClass
 import com.xsmile2008.khaki.R
 import com.xsmile2008.khaki.enums.Screen
