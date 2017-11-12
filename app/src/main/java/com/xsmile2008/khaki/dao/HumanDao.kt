@@ -22,7 +22,7 @@ interface HumanDao {
     fun findById(id: Long): Human?
 
     @Insert(onConflict = REPLACE)
-    fun insert(human: Human)
+    fun insert(human: Human): Long
 
     @Insert(onConflict = REPLACE)
     fun insertAll(humans: Array<Human>)

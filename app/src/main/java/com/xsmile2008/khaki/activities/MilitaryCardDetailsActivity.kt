@@ -1,6 +1,8 @@
 package com.xsmile2008.khaki.activities
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +11,8 @@ import android.widget.Toast
 import com.xsmile2008.khaki.AppClass
 import com.xsmile2008.khaki.R
 import com.xsmile2008.khaki.consts.HUMAN_ID
+import com.xsmile2008.khaki.consts.MILITARY_CARD
+import com.xsmile2008.khaki.consts.NOT_FOUND_LONG
 import com.xsmile2008.khaki.db.AppDatabase
 import com.xsmile2008.khaki.entities.MilitaryCard
 import com.xsmile2008.khaki.utils.formatDate
@@ -40,7 +44,7 @@ class MilitaryCardDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetLi
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val humanId = intent.getLongExtra(HUMAN_ID, -1)
+        val humanId = intent.getLongExtra(HUMAN_ID, NOT_FOUND_LONG)
 
         async(CommonPool) {
             militaryCard = db.militaryCardDao().findByHumanId(humanId)
@@ -74,15 +78,21 @@ class MilitaryCardDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetLi
                                 it.authority = f_authority.text.toString()
                                 db.militaryCardDao().update(it)
                             }
+                            setResult(Activity.RESULT_OK)
                         } else {
-                            db.militaryCardDao().insert(
-                                    MilitaryCard(
-                                            f_military_card_number.text.toString(),
-                                            intent.getLongExtra(HUMAN_ID, -1),
-                                            f_authority.text.toString(),
-                                            date!!//TODO:
-                                    )
+                            val humanId = intent.getLongExtra(HUMAN_ID, NOT_FOUND_LONG)
+                            val militaryCard = MilitaryCard(
+                                    f_military_card_number.text.toString(),
+                                    humanId,
+                                    f_authority.text.toString(),
+                                    date!!//TODO:
                             )
+                            if (humanId != NOT_FOUND_LONG) {
+                                db.militaryCardDao().insert(militaryCard)
+                                setResult(Activity.RESULT_OK)
+                            } else {
+                                setResult(Activity.RESULT_OK, Intent().putExtra(MILITARY_CARD, militaryCard))
+                            }
                         }
                         finish()
                     } catch (e: Exception) {

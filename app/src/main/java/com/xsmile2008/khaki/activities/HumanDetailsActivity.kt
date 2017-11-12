@@ -15,7 +15,9 @@ import android.widget.Toast
 import com.xsmile2008.khaki.AppClass
 import com.xsmile2008.khaki.R
 import com.xsmile2008.khaki.consts.HUMAN_ID
+import com.xsmile2008.khaki.consts.MILITARY_CARD
 import com.xsmile2008.khaki.consts.NOT_FOUND_LONG
+import com.xsmile2008.khaki.consts.PASSPORT
 import com.xsmile2008.khaki.entities.Human
 import com.xsmile2008.khaki.entities.MilitaryCard
 import com.xsmile2008.khaki.entities.Passport
@@ -36,6 +38,8 @@ class HumanDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
 
     private var gender: Gender? = null
     private var birthday: Date? = null
+    private var passport: Passport? = null
+    private var militaryCard: MilitaryCard? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +99,7 @@ class HumanDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                             gender?.let { human.gender = it }
                             model.db.humanDao().update(human)
                         } else {
-                            model.db.humanDao().insert(
+                            val id = model.db.humanDao().insert(
                                     Human(
                                             f_first_name.text.toString(),
                                             f_middle_name.text.toString(),
@@ -104,6 +108,14 @@ class HumanDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                                             gender!!
                                     )
                             )
+                            passport?.let {
+                                it.humanId = id
+                                model.db.passportDao().insert(it)
+                            }
+                            militaryCard?.let {
+                                it.humanId = id
+                                model.db.militaryCardDao().insert(it)
+                            }
                         }
                         finish()
                     } catch (e: Exception) {
@@ -119,10 +131,24 @@ class HumanDetailsActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            val humanId = intent.getLongExtra(HUMAN_ID, -1)
+            val humanId = intent.getLongExtra(HUMAN_ID, NOT_FOUND_LONG)
             when (requestCode) {
-                PassportDetailsActivity.REQUEST_CODE -> model.fetchPassport(humanId)
-                MilitaryCardDetailsActivity.REQUEST_CODE -> model.fetchMilitaryCard(humanId)
+                PassportDetailsActivity.REQUEST_CODE -> {
+                    if (humanId == NOT_FOUND_LONG) {
+                        passport = data?.getSerializableExtra(PASSPORT) as Passport
+                        setPassportText(passport?.number)
+                    } else {
+                        model.fetchPassport(humanId)
+                    }
+                }
+                MilitaryCardDetailsActivity.REQUEST_CODE -> {
+                    if (humanId == NOT_FOUND_LONG) {
+                        militaryCard = data?.getSerializableExtra(MILITARY_CARD) as MilitaryCard
+                        setMilitaryCardText(militaryCard?.number)
+                    } else {
+                        model.fetchMilitaryCard(humanId)
+                    }
+                }
             }
         }
     }
