@@ -62,7 +62,7 @@ class HumansFragment : Fragment() {
                 DividerItemDecoration.VERTICAL).apply { setDrawable(context.getDrawable(R.drawable.divider_empty_8dp)) }
         )
 
-        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.END, ItemTouchHelper.START) {
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.START, ItemTouchHelper.END) {
             override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
                 return false
             }

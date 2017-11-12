@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         AppClass.component.inject(this)
         setContentView(R.layout.activity_main)
 
-        router.navigateTo(Screen.HUMANS.name)
+        router.newRootScreen(Screen.HUMANS.name)
     }
 
     override fun onResume() {
