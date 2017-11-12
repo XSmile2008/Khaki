@@ -31,13 +31,14 @@ class AppClass : Application() {
         super.onCreate()
         async(CommonPool) {
             try {
-                db.passportsDao().deleteAll()
-                db.passportsDao().insert(Passport("HE627560", "tako", Date()))
-
                 db.humanDao().deleteAll()
-                db.humanDao().insert(Human("Tako", "Burito", "Nachos", Date(), Gender.MALE, "HE627560"))
-                db.humanDao().insert(Human("Tako", "Burito", "Nachos", Date(), Gender.MALE, null))
-                db.humanDao().insert(Human("Tako", "Burito", "Nachos", Date(), Gender.MALE, null))
+                db.humanDao().insert(Human("Tako", "Burito", "Nachos", Date(), Gender.MALE))
+                db.humanDao().insert(Human("Tako", "Burito", "Nachos", Date(), Gender.FEMALE))
+                db.humanDao().insert(Human("Tako", "Burito", "Nachos", Date(), Gender.MALE))
+
+                db.passportDao().deleteAll()
+                db.passportDao().insert(Passport("HE627560", db.humanDao().getAll()[0].id, "tako", Date()))
+
                 Log.d(AppClass::class.java.simpleName, "inited")
             } catch (e: Exception) {
                 e.printStackTrace()

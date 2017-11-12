@@ -13,10 +13,10 @@ import com.xsmile2008.khaki.entities.Human
 interface HumanDao {
 
     @Query("SELECT * FROM humans")
-    fun getAll(): LiveData<List<Human>>
+    fun getAllLive(): LiveData<List<Human>>
 
-//    @Query("SELECT * FROM humans")
-//    fun getAll(): List<Human>
+    @Query("SELECT * FROM humans")
+    fun getAll(): List<Human>
 
     @Query("SELECT * FROM humans WHERE id = :id")
     fun findById(id: Long): Human?

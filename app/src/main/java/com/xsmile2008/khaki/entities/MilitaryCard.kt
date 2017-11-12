@@ -10,7 +10,7 @@ import java.util.*
  * Created by vladstarikov on 10/21/17.
  */
 @Entity(
-        tableName = "passports",
+        tableName = "military_cards",
         foreignKeys = arrayOf(
                 ForeignKey(
                         entity = Human::class,
@@ -20,7 +20,7 @@ import java.util.*
                 )
         )
 )
-class Passport(
+class MilitaryCard(
         @PrimaryKey
         @ColumnInfo(name = "number") var number: String,
         @ColumnInfo(name = "human_id") var humanId: Long,

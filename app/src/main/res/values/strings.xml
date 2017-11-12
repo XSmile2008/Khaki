@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Khaki</string>
+
+    <string name="action_select">Select</string>
+    <string name="action_create">Create</string>
+    <string name="action_save">Save</string>
+
+    <string name="empty">Empty</string>
+
+    <string name="passport_details">Passport Details</string>
+
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="authority">Authority</string>
+
+    <string name="line_title_passport">Passport:</string>
+    <string name="line_title_birthday">Birthday:</string>
+    <string name="line_title_gender">Gender:</string>
+    <string name="line_title_date_of_creation">Date of creation:</string>
 </resources>

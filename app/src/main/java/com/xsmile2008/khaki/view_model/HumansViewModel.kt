@@ -20,7 +20,7 @@ class HumansViewModel : ViewModel() {
 
     init {
         AppClass.component.inject(this)
-        humans = db.humanDao().getAll()
+        humans = db.humanDao().getAllLive()
     }
 
     fun getHumans(): LiveData<List<Human>> = humans

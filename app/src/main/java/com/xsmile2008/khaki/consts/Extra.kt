@@ -5,3 +5,4 @@ package com.xsmile2008.khaki.consts
  */
 
 const val HUMAN_ID = "HUMAN_ID"
+const val PASSPORT_NUMBER = "PASSPORT_NUMBER"

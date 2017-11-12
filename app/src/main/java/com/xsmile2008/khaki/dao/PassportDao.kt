@@ -17,6 +17,9 @@ interface PassportDao {
     @Query("SELECT * FROM passports WHERE number = :number")
     fun findByNumber(number: String): Passport?
 
+    @Query("SELECT * FROM passports WHERE human_id = :humanId")
+    fun findByHumanId(humanId: Long): Passport?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(passport: Passport)
 

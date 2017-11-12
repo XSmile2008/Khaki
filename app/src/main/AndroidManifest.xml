@@ -18,6 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HumanDetailsActivity" />
+        <activity android:name=".activities.HumanDetailsActivity" android:label="Recruit details" />
+        <activity android:name=".activities.PassportDetailsActivity" android:label="@string/passport_details"/>
+        <activity android:name=".activities.MilitaryCardDetailsActivity" android:label="Military Card Details"/>
     </application>
 </manifest>
